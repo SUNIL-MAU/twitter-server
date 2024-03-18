@@ -15,3 +15,18 @@ export interface GoogleTokenResult {
   exp: number;
   jti: string;
 }
+
+export interface JWTUser {
+  id: string;
+  email: string;
+}
+
+export interface GraphqlContext {
+  user?: JWTUser;
+}
+
+export interface CreateTweetPayload {
+  content: string;
+  imageURL?: string;
+  userId: string;
+}

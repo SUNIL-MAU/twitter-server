@@ -1,7 +1,8 @@
 import { OAuth2Client } from "google-auth-library";
 import { db } from "../../client/db";
-import { GoogleTokenResult } from "../../global/types";
+
 import JWTServices from "../../services/jwt";
+import { GoogleTokenResult, GraphqlContext } from "../../interfaces";
 
 const queries = {
   verifyGoogleToken: async (parent: any, { token }: { token: String }) => {
@@ -42,6 +43,16 @@ const queries = {
       return jwtToken;
     } catch (error: any) {
       throw new Error(error);
+    }
+  },
+  getCurrentUser: async (parent: any, args: any, ctx: GraphqlContext) => {
+    try {
+      const id = ctx.user?.id;
+      if (!id) return null;
+      const user = await db.user.findFirst({ where: { id } });
+      return user;
+    } catch (error: any) {
+      throw new Error("Internal server error");
     }
   },
 };
