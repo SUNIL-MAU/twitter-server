@@ -4,9 +4,9 @@ import { createTweet } from "../../services/tweet";
 
 const s3Client = new S3({
   apiVersion: "2006-03-01",
-  accessKeyId: process.env.AWS_ACCESS_KEY!,
-  secretAccessKey: process.env.AWS_SECRET_KEY!,
-  region: process.env.AWS_DEFAULT_REGION!,
+  accessKeyId: process.env.ACCESS_KEY!,
+  secretAccessKey: process.env.SECRET_KEY!,
+  region: process.env.DEFAULT_REGION!,
   signatureVersion: "v4",
 });
 
@@ -28,7 +28,7 @@ const queries = {
         throw new Error("Unsupported Image Type");
 
       const s3Params = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME!,
+        Bucket: process.env.S3_BUCKET_NAME!,
         Key: `uploads/${ctx.user.id}/tweets/${imageName}-${Date.now()}`,
         Expires: 60,
         ContentType: imageType,
